@@ -11,7 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('notes',function(Blueprint $table){
+            $table->id(); //used to identify the id of no.of notes
+            $table->string('title',length:255);
+            $table->text('description');//used to get the text by the users
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();//used to connect the user and notes table using one to many and delete both when required
+            $table->enum('status',['pending','completed']);
+            $table->dateTime('deadline')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        }); 
     }
 
     /**
@@ -19,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('notes');
     }
 };
