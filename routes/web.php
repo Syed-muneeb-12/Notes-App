@@ -11,6 +11,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/notes',[NoteController::class,'index'])->name('notes.index');
     Route::get('/create',[NoteController::class,'create'])->name('notes.create');
     Route::post('/store',[NoteController::class,'store'])->name('notes.store');
-     Route::get('/notes/{$note}/edit',[NoteController::class,'edit'])->name('notes.edit');
+    Route::get('/notes/{note}/edit',[NoteController::class,'edit'])->name('notes.edit');
+    Route::patch('/notes/{note}',[NoteController::class,'update'])->name('notes.update');
 });
 require __DIR__.'/settings.php';

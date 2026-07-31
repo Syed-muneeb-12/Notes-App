@@ -98,23 +98,33 @@
 <main class="bg-night min-h-screen py-8 text-white">
   <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 space-y-6">
     
-    <h1 class="text-white flex justify-center text-4xl font-bold mx-auto">Have an Task Save it!</h1>
+    <h1 class="text-white flex justify-center text-4xl font-bold mx-auto">Have a Task? Save it!</h1>
     
     <h3 class="text-xl font-bold text-white border-b border-zinc-800 pb-2">Your Notes</h3>
     
-    <!-- Floating dark card container -->
-    <div class="card card-border bg-night-900 border border-zinc-800 rounded-2xl shadow-2xl w-96 transform hover:-translate-y-1 transition duration-200">
-      <div class="card-body">
-        <h2 class="card-title text-white flex flex-col items-start gap-2">        
-          @foreach ($notes as $note)
-              <h2 class="text-white font-bold text-lg">{{ $note->title }}</h2>
-              <p class="text-zinc-300 text-sm font-normal mb-4">{{ $note->description }}</p>
-          @endforeach
-        </h2>
-        <div class="card-actions justify-end border-t border-zinc-800 pt-3">
-          <a href="{{ route('notes.edit', $note) }}" class="btn btn-primary text-white">Edit</a>
+    {{-- Grid container to organize notes side-by-side on larger screens --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      @forelse($notes as $note)
+        {{-- Single Card for each note --}}
+        <div class="card bg-zinc-900 border border-zinc-800 p-5 rounded-2xl shadow-xl transform hover:-translate-y-1 transition duration-200">
+          
+          <h2 class="text-white font-bold text-lg mb-2">{{ $note->title }}</h2>
+          <p class="text-zinc-300 text-sm font-normal mb-4 flex-1">{{ $note->description }}</p>
+          
+          <div class="card-actions justify-end border-t border-zinc-800 pt-3 mt-auto">
+            <a href="{{ route('notes.edit', $note) }}" class="btn btn-primary text-white btn-sm">Edit</a>
+          </div>
+
         </div>
-      </div>
+      @empty
+        {{-- Show this ONLY when there are zero notes --}}
+        <div class="col-span-full py-12 text-center border border-dashed border-zinc-800 rounded-2xl">
+          <p class="text-zinc-400 text-base">No notes found. Create your first note above!</p>
+          <a href="{{ route('notes.create', $note) }}" class="btn btn-secondary text-white btn-sm">Create</a>
+        </div>
+      @endforelse
+
     </div>
 
   </div>

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Note extends Model
 {
+    protected $casts = [
+    'deadline' => 'date', // Tells Laravel to automatically convert 'deadline' into a Carbon instance
+    ];
     use SoftDeletes;
 
     protected $guarded = [];

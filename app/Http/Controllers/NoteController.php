@@ -13,6 +13,7 @@ use function Pest\Laravel\get;
 
 class NoteController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -67,9 +68,9 @@ class NoteController extends Controller
     public function edit(Note $note)
     {
         if($note->user_id === Auth::id()){
-            return view('edit',compact($note));
+            return view('edit',compact('note'));
         }
-        abort(404);
+        abort(403);
     }
 
     /**
