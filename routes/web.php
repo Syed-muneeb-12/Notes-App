@@ -11,6 +11,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/notes',[NoteController::class,'index'])->name('notes.index');
     Route::get('/create',[NoteController::class,'create'])->name('notes.create');
     Route::post('/store',[NoteController::class,'store'])->name('notes.store');
-     Route::get('/edit/{edit}',[NoteController::class,'edit'])->name('notes.edit');
+     Route::get('/notes/{$note}/edit',[NoteController::class,'edit'])->name('notes.edit');
 });
 require __DIR__.'/settings.php';
