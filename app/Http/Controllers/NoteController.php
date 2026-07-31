@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,9 +34,23 @@ class NoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'deadline' =>['nullable','date'],
+        ]);
+
+        Note::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'user_id' => Auth::id(),
+            'status' =>'pending',
+            'deadline'=>$validated['deadline'],
+        ]);
+
+        return redirect()->route('notes.index');
     }
 
     /**
@@ -42,6 +58,7 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
+
     }
 
     /**
@@ -49,7 +66,7 @@ class NoteController extends Controller
      */
     public function edit(Note $note)
     {
-        //
+        
     }
 
     /**

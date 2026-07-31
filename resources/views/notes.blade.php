@@ -12,7 +12,7 @@
             <div class="ml-10 flex items-baseline space-x-4">
               <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
               <a href="#" aria-current="page" class="rounded-md bg-gray-950/50 px-3 py-2 text-sm font-medium text-white">Dashboard</a>
-              <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Team</a>
+              <a href="{{ route('notes.create') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Create</a>
               <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Projects</a>
               <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Calendar</a>
               <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Reports</a>
@@ -65,7 +65,7 @@
       <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
         <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
         <a href="#" aria-current="page" class="block rounded-md bg-gray-950/50 px-3 py-2 text-base font-medium text-white">Dashboard</a>
-        <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Team</a>
+        <a href="/create" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Create</a>
         <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Projects</a>
         <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Calendar</a>
         <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Reports</a>
@@ -95,16 +95,29 @@
       </div>
     </el-disclosure>
   </nav>
-  <main>
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 class="text-white flex justify-center text-4xl font-bold mx-auto">Have an Task Save it!</h1>
-      <h3>Your Notes</h3>
-      <ul>
-        @foreach ($notes as $note)
-        <li>{{ $note->description }}</li>
-        @endforeach
-      </ul>
+<main class="bg-night min-h-screen py-8 text-white">
+  <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 space-y-6">
+    
+    <h1 class="text-white flex justify-center text-4xl font-bold mx-auto">Have an Task Save it!</h1>
+    
+    <h3 class="text-xl font-bold text-white border-b border-zinc-800 pb-2">Your Notes</h3>
+    
+    <!-- Floating dark card container -->
+    <div class="card card-border bg-night-900 border border-zinc-800 rounded-2xl shadow-2xl w-96 transform hover:-translate-y-1 transition duration-200">
+      <div class="card-body">
+        <h2 class="card-title text-white flex flex-col items-start gap-2">        
+          @foreach ($notes as $note)
+              <h2 class="text-white font-bold text-lg">{{ $note->title }}</h2>
+              <p class="text-zinc-300 text-sm font-normal mb-4">{{ $note->description }}</p>
+          @endforeach
+        </h2>
+        <div class="card-actions justify-end border-t border-zinc-800 pt-3">
+          <a href ='/edit' class="btn btn-primary text-white">edit</a>
+        </div>
+      </div>
     </div>
-  </main>
+
+  </div>
+</main>
 </div>
 </x-layout>

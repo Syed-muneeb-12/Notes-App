@@ -1,7 +1,7 @@
 <x-layout>
     <div class="max-w-2xl mx-auto mt-12 px-4">
         <!-- Form Container -->
-        <form action="#" method="POST" class="bg-slate-800 border border-slate-700 rounded-xl shadow-xl p-6 space-y-4">
+        <form action="{{ route('notes.store') }}" method="POST" class="bg-slate-800 border border-slate-700 rounded-xl shadow-xl p-6 space-y-4">
             @csrf
             <!-- Header -->
             <div>
@@ -38,12 +38,14 @@
             <!-- Action Buttons -->
             <div class="flex items-center justify-end space-x-3 pt-2">
                 <!-- Secondary Button -->
+                <a href="/notes">
                 <button 
-                    type="button" 
-                    class="px-4 py-2 text-sm font-medium text-slate-300 bg-slate-700 hover:bg-slate-600 focus:ring-2 focus:ring-slate-500 rounded-lg transition-colors duration-150"
-                >
+                  type="button" 
+                  class="px-4 py-2 text-sm font-medium text-slate-300 bg-slate-700 hover:bg-slate-600 focus:ring-2 focus:ring-slate-500 rounded-lg transition-colors duration-150">
                     Cancel
                 </button>
+                </a>
+
 
                 <!-- Primary Button -->
                 <button 
@@ -75,7 +77,7 @@
                     name="deadline" 
                     min="{{ date('Y-m-d') }}"
                     class="sr-only"/>
-                    
+
             </div>
         </form>
     </div>
