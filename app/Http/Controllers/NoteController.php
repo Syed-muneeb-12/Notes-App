@@ -7,7 +7,7 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Validation\Rule;
 
 use function Pest\Laravel\get;
 
@@ -78,7 +78,17 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        //
+        if($note->user_id === Auth::id()){
+            $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'deadline' =>['nullable','date'],
+            'status'=> Rule::in(['pending', 'completed']),
+        ]);
+        $note->update($validated);
+        return redirect()->route('notes.index');
+        }
+        abort(403);
     }
 
     /**
