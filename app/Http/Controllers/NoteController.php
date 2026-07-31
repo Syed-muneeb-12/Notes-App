@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
+use function Pest\Laravel\delete;
 use function Pest\Laravel\get;
 
 class NoteController extends Controller
@@ -96,6 +98,11 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        if($note->user_id === Auth::id()){
+
+            $note->delete();
+            return redirect()->route('notes.index');
+        }
+        abort(403);
     }
 }

@@ -103,28 +103,32 @@
     <h3 class="text-xl font-bold text-white border-b border-zinc-800 pb-2">Your Notes</h3>
     
     {{-- Grid container to organize notes side-by-side on larger screens --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        @forelse ($notes as $note)
+            <div class="card bg-zinc-900 border border-zinc-800 p-4 rounded-xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-white text-lg font-bold">{{ $note->title }}</h2>
+                    <p class="text-zinc-300 text-sm font-normal mb-4 flex-1">{{ $note->description }}</p>
+                </div>
 
-      @forelse($notes as $note)
-        {{-- Single Card for each note --}}
-        <div class="card bg-zinc-900 border border-zinc-800 p-5 rounded-2xl shadow-xl transform hover:-translate-y-1 transition duration-200">
-          
-          <h2 class="text-white font-bold text-lg mb-2">{{ $note->title }}</h2>
-          <p class="text-zinc-300 text-sm font-normal mb-4 flex-1">{{ $note->description }}</p>
-          
-          <div class="card-actions justify-end border-t border-zinc-800 pt-3 mt-auto">
-            <a href="{{ route('notes.edit', $note) }}" class="btn btn-primary text-white btn-sm">Edit</a>
-          </div>
-
-        </div>
-      @empty
-        {{-- Show this ONLY when there are zero notes --}}
-        <div class="col-span-full py-12 text-center border border-dashed border-zinc-800 rounded-2xl">
-          <p class="text-zinc-400 text-base">No notes found. Create your first note above!</p>
-          <a href="{{ route('notes.create', $note) }}" class="btn btn-secondary text-white btn-sm">Create</a>
-        </div>
-      @endforelse
-
+                <div class="card-actions justify-end border-t border-zinc-800 pt-3 mt-auto flex items-center gap-2">
+                    {{-- Edit Button --}}
+                    <a href="{{ route('notes.edit', $note) }}" class="btn btn-primary text-white btn-sm">Edit</a>
+                    
+                    {{-- Delete Form & Button --}}
+                    <form action="{{ route('notes.destroy', $note) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-error text-white btn-sm">Delete</button>
+                    </form> 
+                </div>
+            </div>
+        @empty
+            <div class="col-span-full py-12 text-center border border-dashed border-zinc-800 rounded-2xl">
+                <p class="text-zinc-400 text-base">No notes found. Create your first note above!</p>
+                <a href="{{ route('notes.create') }}" class="btn btn-secondary text-white btn-sm">Create</a>
+            </div>
+        @endforelse
     </div>
 
   </div>
